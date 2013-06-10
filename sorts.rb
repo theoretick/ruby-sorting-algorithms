@@ -13,11 +13,6 @@ module Sorts
             9, 6, 50, 33, 2, 27, 35, 4, 43, 45, 1, 20,
             24, 16, 26, 7, 10, 12, 17, 3, 19, 8, 41, 5,
             42, 11, 38, 23, 39]
-  SMALLX= [2, 3, 4, 6, 7, 7]
-  BIGX  = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-           16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-           30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
-           44, 45, 46, 47, 48, 49, 50]
 
   def self.selectionsort(unsorted)
     # non-recursive selectionsort
@@ -39,37 +34,35 @@ module Sorts
       sorted << tmpsort[0]
       unsorted = tmpsort[(1..-1)]
 
-      #print "#{sorted}, "
     end
     return sorted
   end
 
   def self.bubblesort(unsorted)
+    unsorted.each_cons(2) do |x,y|
+      debugger
+      if x>y
+        x,y = y,x
+        #retry
+      end
+    end
+    return unsorted
   end
 
   def self.mergesort(unsortedA, unsortedB)
     # merges two pre-sorted arrays
-    # determine which is larger and assign largest to base
-    # METHOD 1
-    if unsortedB.length > unsortedA.length
-      base_array = unsortedB
-      injection_array = unsortedA
-    else
-      base_array = unsortedA
-      injection_array = unsortedB
-    end
-    # METHOD 2 -- now returns largest FIRST ELEMENT
-    # base_array = [unsortedB,unsortedA].max
-    # injection_array = [unsortedB,unsortedA].min
+    injection_array, base_array = [unsortedA, unsortedB].sort_by(&:length)
     sorted = []
     i = 0
 
     base_array.each do |item|
       injectee = injection_array[i]
+
       while (injectee != nil) && (injectee < item) do
         sorted.push(injectee)
         injectee = injection_array[i+=1]
       end
+
       if (injectee != nil) && (injectee == item)
         sorted.push(injectee, item)
         i += 1
