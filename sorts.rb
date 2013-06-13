@@ -3,7 +3,6 @@
 #
 
 require 'minitest/autorun'
-require 'ruby-debug'
 
 module Sorts
 
@@ -32,7 +31,8 @@ module Sorts
       end
 
       sorted << tmpsort[0]
-      unsorted = tmpsort[(1..-1)]
+      unsorted = tmpsort[1..-1]
+      #unsorted = tmpsort[(1..-1)]
 
     end
     return sorted
@@ -40,7 +40,6 @@ module Sorts
 
   def self.bubblesort(unsorted)
     unsorted.each_cons(2) do |x,y|
-      debugger
       if x>y
         x,y = y,x
         #retry
